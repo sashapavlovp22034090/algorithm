@@ -1,0 +1,71 @@
+1. Сортировка пузырьком
+void bubble_sort(vector<int> &a)
+{
+    int n = a.size();
+    bool unordered = true;
+    while (unordered){
+        unordered = false;
+        for (int j = 0; j < n - 1; ++j){
+            if (a[j] > a[j + 1]){
+                swap(a[j], a[j + 1]);
+                unordered = true;
+            }
+        }
+        --n;
+    }
+}
+
+2. Сортировка выбором
+void selection_sort(vector<int> &a)
+{
+   for (int i = 0; i < (int)a.size() - 1; ++i) {
+        int imin = i;
+        for (int j = i + 1; j < a.size();++j){
+            if (a[j] < a[imin])
+                imin = j;
+        }
+        swap(a[i], a[imin]);
+   }
+}
+
+3. Сортировка вставками
+void insertion_sort(vector<int> &a)
+{
+    for (int i = 1; i < a.size(); ++i)
+    {
+        int tmp = a[i];
+        int j = i - 1;
+        while (j >= 0 && a[j] > tmp)
+        {
+            a[j + 1] = a[j];
+            --j;
+        }
+        a[j + 1] = tmp;
+    }
+}
+
+4. Сортировка слиянием
+vector<int> merge(vector<int> a, vector<int> b) {
+    vector<int> res;
+    int i = 0;
+    int j = 0;
+    while (i < a.size() && j < b.size()) {
+        if (a[i] <= b[j])
+            res.push_back(a[i++]);
+        else
+           res.push_back(b[j++]);
+    }
+    while (i < a.size())
+        res.push_back(a[i++]);
+    while (j < b.size())
+        res.push_back(b[j++]);
+    return res;
+}
+vector<int> msort(vector<int> a) {
+    if (a.size() <= 1)
+        return a;
+    int k = a.size() / 2;
+    return merge(
+        msort(vector<int>(a.begin(), a.begin() + k)),
+        msort(vector<int>(a.begin() + k, a.end())));
+}
